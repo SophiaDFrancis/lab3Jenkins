@@ -50,13 +50,14 @@ pipeline {
         }
 
         stage('Test stage') {
-          steps {
-            sh '''
-            python3 -m venv .venv
-            pip3 install -r requirements.txt
-            python3 -m unittest test.py
-            deactivate
-            '''
+            steps {
+                sh '''
+                python3 -m venv .venv
+                . .venv/bin/activate
+                pip3 install -r requirements.txt
+                python3 -m unittest test.py
+                deactivate
+                '''
           }
         }
     }
