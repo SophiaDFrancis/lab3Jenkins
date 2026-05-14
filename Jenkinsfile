@@ -48,16 +48,17 @@ pipeline {
             }
         }
 
-        stage('Test Stage') {
-            steps {
-                sh '''
-                docker run --rm \
-                    --network $NETWORK_NAME \
-                    $IMAGE_NAME \
-                    python3 -m unittest test.py
-                '''
-            }
-        }
+      stage('Test Stage') {
+          steps {
+            sh '''
+            docker run --rm \
+              --network $NETWORK_NAME \
+              --entrypoint "" \
+              $IMAGE_NAME \
+              python3 -m unittest test.py
+            '''
+          }
+      }
 
         stage('Security Scan') {
             steps {
