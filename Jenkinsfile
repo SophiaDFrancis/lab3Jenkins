@@ -28,40 +28,42 @@ pipeline {
 
         stage('Build Image') {
             steps {
-                sh "docker build -t $IMAGE_NAME ."
+                sh '''
+                docker build -t $IMAGE_NAME .
+                '''
             }
         }
 
-        stage('Run Containers') {
+        stage('Run Container') {
             steps {
                 sh '''
                 docker run -d \
                     --name $CONTAINER_NAME \
                     --network $NETWORK_NAME \
+                    -p 5500:5500 \
                     $IMAGE_NAME
+
+                sleep 5
+                '''
+            }
+        }
+
+        stage('Test Stage') {
+            steps {
+                sh '''
+                docker run --rm \
+                    --network $NETWORK_NAME \
+                    $IMAGE_NAME \
+                    python3 -m unittest test.py
                 '''
             }
         }
 
         stage('Security Scan') {
             steps {
-                sh 'trivy fs .'
+                sh '''
+                trivy fs .
+                '''
             }
         }
-
-        stage('Test stage') {
-            steps {
-                sh '''
-                python3 -m venv .venv
-                . .venv/bin/activate
-                pip3 install -r requirements.txt
-                python3 -m unittest test.py
-                deactivate
-                '''
-          }
-        }
     }
-}
-
-
-
