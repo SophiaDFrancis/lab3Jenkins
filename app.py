@@ -2,7 +2,7 @@
 Basic static web app
 Use for exercises that don't need a database layer
 '''
-from flask import Flask
+from Flask import Flask
 from os import getenv
 
 app = Flask(__name__)
