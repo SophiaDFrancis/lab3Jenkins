@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stages('Pipeline Stages'){
+    stage('Pipeline Stages'){
       steps {
         sh "ls"
       }
