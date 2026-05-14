@@ -48,10 +48,10 @@ pipeline {
                 sh 'trivy fs .'
             }
         }
-        
+
         stage('Test stage') {
           steps {
-            sh 'python3 test.py'
+            sh 'python3 -m unittest test.py'
           }
         }
     }
