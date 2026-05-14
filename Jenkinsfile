@@ -40,6 +40,13 @@ pipeline {
                 '''
             }
         }
+        stage('Security Scan') {
+            steps {
+                script {
+                    sh 'trivy fs /path/to/your/project'
+                }
+            }
+        }
     }
 }
 
