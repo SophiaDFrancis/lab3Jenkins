@@ -11,7 +11,9 @@ pipeline {
 
         stage('Clean-up Stage') {
             steps {
-                sh "docker container prune -f"
+                sh '''
+                docker rm -f $CONTAINER_NAME || true
+                '''
             }
         }
 
@@ -40,22 +42,14 @@ pipeline {
                 '''
             }
         }
+
         stage('Security Scan') {
             steps {
-                script {
-                    sh 'trivy fs /path/to/your/project'
-                }
+                sh 'trivy fs .'
             }
         }
     }
 }
-
-
-
-
-
-
-
 
 
 
